@@ -2,7 +2,7 @@
 """
 Created on Tue Feb 18 22:41:56 2024
 
-@author: 
+@author: Pratap Ponnam
 """
 
 import numpy as np
@@ -118,9 +118,9 @@ def plot_temp_correlation_pb(df):
 
 
 #dataframes to store the data from csv files 
-df_Temp= pd.read_csv('C:/Users/anude/Downloads/Untitled Folder/zonann_temps.csv',
+df_Temp= pd.read_csv('zonann_temps.csv',
                      index_col = 'Year')
-df_ESG = pd.read_csv('C:/Users/anude/Downloads/Untitled Folder/ESGData.csv',
+df_ESG = pd.read_csv('ESGData.csv',
                      index_col = 'Time')
 
 #to clean the data
