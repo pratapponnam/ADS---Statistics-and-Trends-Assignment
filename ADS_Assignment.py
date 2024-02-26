@@ -4,7 +4,7 @@ Created on Tue Feb 18 22:41:56 2024
 
 @author: Pratap Ponnam
 """
-
+#importing required libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -45,7 +45,7 @@ def process_data_pb(df_ESG,df_Temp):
     return df
 
 
-def plot_temp_line_pb(df):
+def plot_line_graph(df):
     """
     Defining a function to create a Line plot 
     to identify the relation between Forest Area and Population Density
@@ -61,14 +61,14 @@ def plot_temp_line_pb(df):
     plt.grid(True)
     plt.xlim(50,62)
     plt.xticks(rotation=45)
-    # Save the plot
+    # Save the plot as Linegraph.png
     plt.savefig('Linegraph.png')
     # Show the plot
     plt.show()
     return
 
 
-def plot_temp_histogram_pb(*df):
+def plot_temp_histogram(*df):
     """
     Defining a function to create a histogram 
     to understand the frequency of temperature 
@@ -92,13 +92,13 @@ def plot_temp_histogram_pb(*df):
     plt.xlim(0.4,1.4)
     plt.grid(axis='y')
     plt.legend()
-    # Save the plot
+    # Save the plot as histogram.png
     plt.savefig('histogram.png')
     # Show the plot
     plt.show()
     return
 
-def plot_temp_correlation_pb(df):
+def plot_heatmap_correlation(df):
     """
     Defining a function to create a Heatmap to plot
     correlation between different factors 
@@ -110,18 +110,20 @@ def plot_temp_correlation_pb(df):
     sns.heatmap(df.corr(), annot=True,mask=mask,cmap='coolwarm', linewidths=.5)
     #set the title
     plt.title('Correlation between various factors')
-    # Save the plot
+    # Save the plot as Heatmap.png
     plt.savefig('Heatmap.png')
     # Show the plot
     plt.show()
     return
 
 
-#dataframes to store the data from csv files 
-df_Temp= pd.read_csv('zonann_temps.csv',
-                     index_col = 'Year')
-df_ESG = pd.read_csv('ESGData.csv',
-                     index_col = 'Time')
+#dataframes to store the data from csv files in github
+url1 = 'https://github.com/pratapponnam/ADS---Statistics-and-Trends-Assignment/blob/main/zonann_temps.csv?raw=True'
+url2 = 'https://github.com/pratapponnam/ADS---Statistics-and-Trends-Assignment/blob/main/ESGData.csv?raw=True'
+df_Temp= pd.read_csv(url1,
+                     index_col = 'Year', sep=',')
+df_ESG = pd.read_csv(url2,
+                     index_col = 'Time', sep=',')
 
 #to clean the data
 df = process_data_pb(df_ESG,df_Temp)
@@ -142,12 +144,12 @@ print('Correlation of the data', end='\n')
 print(df.corr() , end='\n\n')
 
 #Visualising the Line Graph
-plot_temp_line_pb(df)
+plot_line_graph(df)
 
 #Visualising the Histogram
-plot_temp_histogram_pb(df['Global Temp'],
+plot_temp_histogram(df['Global Temp'],
                        df['Northern Temp'],
                        df['Southern Temp'])
 
 #Visualising the Heatmap 
-plot_temp_correlation_pb(df)
+plot_heatmap_correlation(df)
