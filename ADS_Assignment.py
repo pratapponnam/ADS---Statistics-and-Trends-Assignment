@@ -107,7 +107,9 @@ def plot_heatmap_correlation(df):
     mask = np.triu(np.ones_like(df.corr()))
     plt.figure(figsize=(7, 5))
     # plotting a heatmap
-    sns.heatmap(df.corr(), annot=True,mask=mask,cmap='coolwarm', linewidths=.5)
+    sns.heatmap(df.corr(), annot=True, mask=mask,
+                cmap='coolwarm', linewidths=.5)
+    
     #set the title
     plt.title('Correlation between various factors')
     # Save the plot as Heatmap.png
@@ -117,22 +119,22 @@ def plot_heatmap_correlation(df):
     return
 
 
-#dataframes to store the data from csv files in github
+#storing the filelinks in variables
 url1 = 'https://github.com/pratapponnam/ADS---Statistics-and-Trends-Assignment/blob/main/zonann_temps.csv?raw=True'
 url2 = 'https://github.com/pratapponnam/ADS---Statistics-and-Trends-Assignment/blob/main/ESGData.csv?raw=True'
-df_Temp= pd.read_csv(url1,
-                     index_col = 'Year', sep=',')
-df_ESG = pd.read_csv(url2,
-                     index_col = 'Time', sep=',')
 
-#to clean the data
+#dataframes to store the data from csv files
+df_Temp= pd.read_csv(url1, index_col = 'Year', sep=',')
+df_ESG = pd.read_csv(url2, index_col = 'Time', sep=',')
+
+#calling function to clean the data
 df = process_data_pb(df_ESG,df_Temp)
 
 #Using describe function for mean, stanadrd deviation, min and max value.
 print('Stats of the data', end='\n')
 df.describe()
 
-#basic statistics
+#basic statistics of the data
 
 print('Skewness of the data', end='\n')
 print(df.skew() , end='\n\n')
