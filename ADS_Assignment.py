@@ -9,6 +9,38 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
+import requests
+
+def download_data(url):
+    """
+    Function to downlaod the data from the url provided and 
+    returns the data frame which has the downloaded data 
+
+    """
+    while(1):
+        try:
+        #fetch the data from url 
+            response = requests.get(url)
+           
+            if response.status_code == 200:
+            # Save the content of the response to a local CSV file
+                with open("downloaded_data.csv", "wb") as f:
+                    f.write(response.content)
+                break
+            else:
+                print("Failed to download CSV file. Status code:", response.status_code)
+        #if exception is raised,continuing the loop
+        except requests.exceptions.HTTPError :
+            continue
+        except requests.exceptions.ConnectionError :
+            continue
+        except requests.exceptions.Timeout :
+            continue
+        except requests.exceptions.RequestException :
+            continue
+    #moving data to dataframe from the downladed data
+    df = pd.read_csv("downloaded_data.csv")
+    return df
 
 def process_data_pb(df_ESG,df_Temp):
     """Function to clean a data frame with required columns """
@@ -123,9 +155,14 @@ def plot_heatmap_correlation(df):
 url1 = 'https://github.com/pratapponnam/ADS---Statistics-and-Trends-Assignment/blob/main/zonann_temps.csv?raw=True'
 url2 = 'https://github.com/pratapponnam/ADS---Statistics-and-Trends-Assignment/blob/main/ESGData.csv?raw=True'
 
-#dataframes to store the data from csv files
-df_Temp= pd.read_csv(url1, index_col = 'Year', sep=',')
-df_ESG = pd.read_csv(url2, index_col = 'Time', sep=',')
+#dataframes to store the data from urls using the functions
+df_Temp = download_data(url1)
+df_ESG = download_data(url2)
+
+#set the index to dataframes
+
+df_Temp.set_index('Year', inplace = True)
+df_ESG.set_index('Time', inplace = True)
 
 #calling function to clean the data
 df = process_data_pb(df_ESG,df_Temp)
