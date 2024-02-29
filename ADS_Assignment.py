@@ -11,6 +11,7 @@ import pandas as pd
 import seaborn as sns
 import requests
 
+
 def download_data(url):
     """
     Function to downlaod the data from the url provided and 
@@ -21,7 +22,7 @@ def download_data(url):
         try:
         #fetch the data from url 
             response = requests.get(url)
-           
+            #check if we got a response from the url
             if response.status_code == 200:
             # Save the content of the response to a local CSV file
                 with open("downloaded_data.csv", "wb") as f:
@@ -41,6 +42,7 @@ def download_data(url):
     #moving data to dataframe from the downladed data
     df = pd.read_csv("downloaded_data.csv")
     return df
+
 
 def process_data_pb(df_ESG,df_Temp):
     """Function to clean a data frame with required columns """
@@ -86,7 +88,7 @@ def plot_line_graph(df):
     #plotting the global temp change data
     plt.plot( df['Population density'],df['Forest Area'], color='blue',marker ='o')
     
-    #set the titles, labels and grid
+    #set the titles, labels, limits and grid values
     plt.title('Relation between Forest Area & Population Density')
     plt.xlabel('Population Density')
     plt.ylabel('Forest Area')
@@ -129,6 +131,7 @@ def plot_temp_histogram(*df):
     # Show the plot
     plt.show()
     return
+
 
 def plot_heatmap_correlation(df):
     """
